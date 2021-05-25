@@ -1,7 +1,11 @@
-
+/*
+ * Watch.java represents watches
+ * David Lonie, 18/11/2019, dpl0795
+ */
 package mainapp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Watch {
     

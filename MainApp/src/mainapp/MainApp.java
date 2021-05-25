@@ -1,8 +1,8 @@
 /*
-Stefanos Chatzileftheris
+ * MainApp.java is main test application
+ * Stefanos Chatzileftheris
  */
 package mainapp;
-//Student:Stefanos ID 190248
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class MainApp {
 
     public static void main(String[] args) {
-        Customer customer;
+               Customer customer;
         Watch w;
         ArrayList<Watch> watches;
 
@@ -95,5 +95,6 @@ public class MainApp {
         } while (input != '0');
         JOptionPane.showMessageDialog(null, "Thanks for using the system Mr/Ms: " + customer.getName() + ".Goodbye");
     }
+    }
 
-}
+

@@ -1,3 +1,4 @@
+
 package mainapp;
 
 public class MechanicalWatch extends Watch {
@@ -40,3 +41,4 @@ public class MechanicalWatch extends Watch {
         System.out.println(m2);
 }
 }
+

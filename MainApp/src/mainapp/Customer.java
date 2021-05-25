@@ -1,3 +1,7 @@
+/*
+ * Customer.java represents customers of wtach shop
+ * Stefanos Chatzileftheris
+ */
 package mainapp;
 
 //Stefanos Chatzileftheris Id:1909248
