@@ -5,6 +5,11 @@
  */
 package mainapp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dell
@@ -12,9 +17,15 @@ package mainapp;
 public class GUI extends javax.swing.JFrame {
 
     Customer customer;
-    
+    ArrayList<Watch> watches;
+    Watch watch;
+    HashMap<Customer, ArrayList<Watch>> records;
+
     public GUI() {
         initComponents();
+        customer = new Customer("Stefanos");
+        watches = new ArrayList();
+        records = new HashMap();
     }
 
     /**
@@ -56,6 +67,11 @@ public class GUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(51, 255, 51));
 
         jComboBoxcustomer.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxcustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxcustomerActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Add New Customer");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -68,12 +84,12 @@ public class GUI extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBoxcustomer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxcustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(109, 109, 109))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +147,7 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
-                        .addGap(0, 27, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -213,8 +229,51 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String name = JOptionPane.showInputDialog("New Customer name");
+        customer = new Customer(name);
+        watches = new ArrayList();
+        records.put(customer, watches);
+        addSomeWatches();
+        updateCustomerList();
+        updateCustomerDetails();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBoxcustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxcustomerActionPerformed
+        customer = (Customer)this.jComboBoxcustomer.getSelectedItem();
+        watches = records.get(customer);
+        this.updateCustomerDetails();
+    }//GEN-LAST:event_jComboBoxcustomerActionPerformed
+
+    private void updateCustomerList() {
+        this.jComboBoxcustomer.setModel(new DefaultComboBoxModel(records.keySet().toArray()));
+    }
+
+    private void updateCustomerDetails() {
+        this.TextName.setText(customer.getName());
+        this.TextId.setText(customer.getId() + "");
+        updateCharges();
+        updateWatchList();
+    }
+
+    private void updateCharges() {
+        double total = 0.0;
+        for (Watch w : watches) {
+            total += w.getCharge();
+
+        }
+        this.TextCharge.setText(total + "");
+    }
+
+    private void updateWatchList() {
+        this.jComboBoxwatches.setModel(new DefaultComboBoxModel(watches.toArray()));
+
+    }
+
+    private void addSomeWatches() {
+        watches.add(new QuartzWatch("Seiko", "sw626"));
+        watches.add(new MechanicalWatch("orang", MechanicalType.AUTOMATIC));
+        watches.add(new MechanicalWatch("timex", MechanicalType.MANUAL));
+    }
 
     /**
      * @param args the command line arguments
